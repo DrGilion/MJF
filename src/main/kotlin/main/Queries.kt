@@ -1,7 +1,7 @@
 package main
 
 object Queries {
-    val selectQueries = mapOf<String,String>(
+    val selectQueries = mapOf(
             "All Food Types" to """
 			PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 			PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
@@ -75,5 +75,27 @@ object Queries {
 				FILTER NOT EXISTS { ?food mjf:caloriesPer100g ?calories }
 			}
 			"""
+    )
+
+    val askQueries = mapOf(
+            "Does Margharita pizza contain basil?" to """
+            PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+			PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+			PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+			PREFIX mjf: <http://michajonasfood.com/>
+			ASK {
+				?pizza foaf:name "margarita" .
+				FILTER EXISTS { ?pizza mjf:contains mjf:basil } .
+			}
+            """,
+            "Is something in fridge ?" to """
+            PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+			PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+			PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+			PREFIX mjf: <http://michajonasfood.com/>
+			ASK {
+				mjf:fridge mjf:hasFood ?x
+			}
+            """
     )
 }

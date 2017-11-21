@@ -18,9 +18,12 @@ PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX mjf: <http://michajonasfood.com/>
 SELECT DISTINCT ?foodName
 WHERE {
-    ?t  rdfs:subClassOf mjf:food .
+    {?t rdfs:subClassOf mjf:food .
     ?food a ?t ;
-    foaf:name ?foodName .
+    foaf:name ?foodName .}
+    union
+    { ?food a mjf:food ;
+    	foaf:name ?foodName }
 }
 ORDER BY ?foodName """,
 

@@ -187,6 +187,7 @@
 :hamburger :contains :ketchup .
 
 :brownie a :dish .
+:brownie foaf:name "brownie" .
 :brownie :contains :chocolate .
 :brownie :contains :flour .
 :brownie :contains :egg .
@@ -202,3 +203,4 @@
 :fridge :hasFood :lemon .
 :fridge :hasFood :bacon .
 :fridge :hasFood :milk .
+:fridge :hasFood :brownie .

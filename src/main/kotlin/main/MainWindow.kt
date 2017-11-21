@@ -1,24 +1,19 @@
 package main
 
+import controller.ModelController
 import javafx.beans.property.SimpleStringProperty
 import javafx.scene.layout.Priority
 import javafx.scene.text.Font
 import org.apache.jena.query.QueryExecutionFactory
 import org.apache.jena.query.ResultSetFormatter
 import org.apache.jena.query.Syntax
-import org.apache.jena.rdf.model.ModelFactory
 import tornadofx.*
 
 class MainWindow : View("Micha-Jonas-Food Project") {
 	private val queryText = SimpleStringProperty()
 	private val outputText = SimpleStringProperty()
 
-	private val model by lazy {
-		val model = ModelFactory.createDefaultModel()
-		model.read("mjfOntology.ttl", "TURTLE")
-	}
-
-	//val currentSelected = SimpleObjectProperty<Map.Entry<String,String>>()
+	private val modelController: ModelController by inject()
 
 	override val root = borderpane {
 		setPrefSize(1280.0, 768.0)
@@ -45,7 +40,7 @@ class MainWindow : View("Micha-Jonas-Food Project") {
 					action {
 						val query = selectBox.selectionModel.selectedItem.value
 
-						val result = QueryExecutionFactory.create(query, Syntax.syntaxARQ, model)
+						val result = QueryExecutionFactory.create(query, Syntax.syntaxARQ, modelController.model)
 						val results = result.execSelect()
 
 						queryText.value = query
@@ -73,7 +68,7 @@ class MainWindow : View("Micha-Jonas-Food Project") {
 					action {
 						val query = askBox.selectionModel.selectedItem.value
 
-						val result = QueryExecutionFactory.create(query, Syntax.syntaxARQ, model)
+						val result = QueryExecutionFactory.create(query, Syntax.syntaxARQ, modelController.model)
 						val boolVal = result.execAsk()
 
 						queryText.value = query
@@ -82,36 +77,36 @@ class MainWindow : View("Micha-Jonas-Food Project") {
 				}
 			}
 
-            row {
-                val constructBox = combobox(values = Queries.constructQueries.entries.toList()) {
-                    useMaxWidth = true
-                    gridpaneConstraints { margin = tornadofx.insets(5) }
-                    cellFormat { text = it.key }
+			row {
+				val constructBox = combobox(values = Queries.constructQueries.entries.toList()) {
+					useMaxWidth = true
+					gridpaneConstraints { margin = tornadofx.insets(5) }
+					cellFormat { text = it.key }
 
-                    selectionModel.selectedItemProperty().onChange {
-                        queryText.value = it?.value
-                    }
-                    selectionModel.selectFirst()
-                }
+					selectionModel.selectedItemProperty().onChange {
+						queryText.value = it?.value
+					}
+					selectionModel.selectFirst()
+				}
 
-                button("Execute Construct Query") {
-                    useMaxWidth = true
-                    gridpaneConstraints { margin = tornadofx.insets(5) }
+				button("Execute Construct Query") {
+					useMaxWidth = true
+					gridpaneConstraints { margin = tornadofx.insets(5) }
 
-                    action {
-                        val query = constructBox.selectionModel.selectedItem.value
+					action {
+						val query = constructBox.selectionModel.selectedItem.value
 
-                        val result = QueryExecutionFactory.create(query, Syntax.syntaxARQ, model)
-                        val newGraph = result.execConstructTriples()
+						val result = QueryExecutionFactory.create(query, Syntax.syntaxARQ, modelController.model)
+						val newGraph = result.execConstructTriples()
 
-                        queryText.value = query
-                        outputText.value = newGraph.asSequence()
+						queryText.value = query
+						outputText.value = newGraph.asSequence()
 								.map { "" + it.subject.localName + " " + it.predicate.localName + " " + it.`object`.localName + "\n" }
 								.joinToString()
-								.replace(", ","")
-                    }
-                }
-            }
+								.replace(", ", "")
+					}
+				}
+			}
 
 			center = hbox(5) {
 				vbox {

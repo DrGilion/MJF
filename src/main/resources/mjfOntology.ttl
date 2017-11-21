@@ -8,44 +8,44 @@
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
 
 #T-BOX
-: a owl:Ontology .
-:food a rdfs:Class .
-:food owl:sameAs dbo:Food .
-
-:fruit rdfs:subClassOf :food .
-:vegetable rdfs:subClassOf :food .
-:animalProduct rdfs:subClassOf :food .
-:spice rdfs:subClassOf :food .
-:meat rdfs:subClassOf :food .
-:fish rdfs:subClassOf :food .
-:cereal rdfs:subClassOf :food .
-:nut rdfs:subClassOf :food .
-:liquid rdfs:subClassOf :food .
-
-:dish rdfs:subClassOf :food .
-:contains rdfs:domain :dish .
-:contains rdfs:range :food .
-
-:taste a rdfs:Class .
-:smell a rdfs:Class .
-
-:Characteristic a rdf:Property .
-
-:tastes rdfs:subPropertyOf :Characteristic .
-:tastes rdfs:domain :food .
-:tastes rdfs:range :taste .
-
-:smells rdfs:subPropertyOf :Characteristic .
-:smells rdfs:domain :food .
-:smells rdfs:range :smell .
-
-:sugarAmountPer100g rdfs:subPropertyOf :Characteristic .
-:sugarAmountPer100g rdfs:domain :food .
-:sugarAmountPer100g rdfs:range xsd:double .
-
-:caloriesPer100g rdfs:subPropertyOf :Characteristic .
-:caloriesPer100g rdfs:domain :food .
-:caloriesPer100g rdfs:range xsd:integer .
+#: a owl:Ontology .
+#:food a rdfs:Class .
+#:food owl:sameAs dbo:Food .
+#
+#:fruit rdfs:subClassOf :food .
+#:vegetable rdfs:subClassOf :food .
+#:animalProduct rdfs:subClassOf :food .
+#:spice rdfs:subClassOf :food .
+#:meat rdfs:subClassOf :food .
+#:fish rdfs:subClassOf :food .
+#:cereal rdfs:subClassOf :food .
+#:nut rdfs:subClassOf :food .
+#:liquid rdfs:subClassOf :food .
+#
+#:dish rdfs:subClassOf :food .
+#:contains rdfs:domain :dish .
+#:contains rdfs:range :food .
+#
+#:taste a rdfs:Class .
+#:smell a rdfs:Class .
+#
+#:Characteristic a rdf:Property .
+#
+#:tastes rdfs:subPropertyOf :Characteristic .
+#:tastes rdfs:domain :food .
+#:tastes rdfs:range :taste .
+#
+#:smells rdfs:subPropertyOf :Characteristic .
+#:smells rdfs:domain :food .
+#:smells rdfs:range :smell .
+#
+#:sugarAmountPer100g rdfs:subPropertyOf :Characteristic .
+#:sugarAmountPer100g rdfs:domain :food .
+#:sugarAmountPer100g rdfs:range xsd:double .
+#
+#:caloriesPer100g rdfs:subPropertyOf :Characteristic .
+#:caloriesPer100g rdfs:domain :food .
+#:caloriesPer100g rdfs:range xsd:integer .
 
 
 #A-BOX

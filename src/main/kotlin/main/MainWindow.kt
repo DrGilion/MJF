@@ -13,6 +13,11 @@ class MainWindow : View("Micha-Jonas-Food Project") {
 	private val queryText = SimpleStringProperty()
 	private val outputText = SimpleStringProperty()
 
+	private val model by lazy {
+		val model = ModelFactory.createDefaultModel()
+		model.read("mjfOntology.ttl", "TURTLE")
+	}
+
 	//val currentSelected = SimpleObjectProperty<Map.Entry<String,String>>()
 
 	override val root = borderpane {
@@ -38,9 +43,6 @@ class MainWindow : View("Micha-Jonas-Food Project") {
 					gridpaneConstraints { margin = tornadofx.insets(5) }
 
 					action {
-						val model = ModelFactory.createDefaultModel()
-						model.read("mjfOntology.ttl", "TURTLE")
-
 						val query = selectBox.selectionModel.selectedItem.value
 
 						val result = QueryExecutionFactory.create(query, Syntax.syntaxARQ, model)
@@ -68,9 +70,6 @@ class MainWindow : View("Micha-Jonas-Food Project") {
 					gridpaneConstraints { margin = tornadofx.insets(5) }
 
 					action {
-						val model = ModelFactory.createDefaultModel()
-						model.read("mjfOntology.ttl", "TURTLE")
-
 						val query = askBox.selectionModel.selectedItem.value
 
 						val result = QueryExecutionFactory.create(query, Syntax.syntaxARQ, model)

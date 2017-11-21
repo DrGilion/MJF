@@ -19,6 +19,7 @@
 :meat rdfs:subClassOf :food .
 :fish rdfs:subClassOf :food .
 :cereal rdfs:subClassOf :food .
+:nut rdfs:subClassOf :food .
 :liquid rdfs:subClassOf :food .
 
 :dish rdfs:subClassOf :food .
@@ -69,11 +70,20 @@
 :chili foaf:name "chili" .
 :chili :tastes :hot .
 
+:sugar a :spice .
+:sugar foaf:name "sugar" .
+:sugar :tastes :sweet .
+:sugar :caloriesPer100g 387 .
+
 :tomato a :vegetable .
 :tomato foaf:name "tomato" .
 :tomato :tastes :sour .
 :tomato :tastes :umami .
 :tomato :caloriesPer100g 18 .
+
+:onion a :vegetable .
+:onion foaf:name "onion" .
+:onion :caloriesPer100g 40 .
 
 :bellPepper a :vegetable .
 :bellPepper foaf:name "bell pepper" .
@@ -86,16 +96,35 @@
 :ginger :tastes :bitter .
 :ginger :smells :fresh .
 
+:pickle a :food .
+:pickle foaf:name "pickle" .
+:pickle :tastes :salty .
+:pickle :caloriesPer100g 11 .
+
 :bacon a :meat .
 :bacon foaf:name "bacon" .
 :bacon :tastes :salty .
 :bacon :tastes :umami .
+
+:mincedMeat a :meat .
+:mincedMeat foaf:name "mincedMeat" .
+:mincedMeat :caloriesPer100g 332 .
 
 :cheese a :animalProduct .
 :cheese foaf:name "cheese" .
 :cheese :tastes :salty .
 :cheese :tastes :umami .
 :cheese :caloriesPer100g 402 .
+
+:butter a :animalProduct .
+:butter foaf:name "butter" .
+:butter :caloriesPer100g 717 .
+
+:chocolate a :food .
+:chocolate foaf:name "chocolate" .
+:chocolate :tastes :sweet .
+:chocolate :tastes :bitter .
+:chocolate :caloriesPer100g 546 .
 
 :egg a :animalProduct .
 :egg foaf:name "egg" .
@@ -104,6 +133,10 @@
 :flour a :cereal .
 :flour foaf:name "flour" .
 :flour :caloriesPer100g 364 .
+
+:bread a :food .
+:bread foaf:name "bread" .
+:bread :caloriesPer100g 310 .
 
 :water a :liquid .
 :water foaf:name "water" .
@@ -117,14 +150,49 @@
 :basil foaf:name "basil" .
 :basil :caloriesPer100g 22 .
 
-:margarithaPizza a :dish .
-:margarithaPizza foaf:name "margarita" .
-:margarithaPizza :contains :flour .
-:margarithaPizza :contains :egg .
-:margarithaPizza :contains :water .
-:margarithaPizza :contains :cheese .
-:margarithaPizza :contains :tomato .
-:margarithaPizza :contains :basil .
+:lettuce a :vegetable .
+:lettuce foaf:name "lettuce" .
+:lettuce :caloriesPer100g 14 .
+
+:ketchup a :liquid .
+:ketchup foaf:name "ketchup" .
+:ketchup :tastes :sweet .
+:ketchup :tastes :sour .
+:ketchup :tastes :umami .
+:ketchup :caloriesPer100g 112 .
+
+:walnut a :nut .
+:walnut foaf:name "walnut" .
+:walnut :tastes :bitter .
+:walnut :caloriesPer100g 678 .
+
+:margharitaPizza a :dish .
+:margharitaPizza foaf:name "margharita" .
+:margharitaPizza :contains :flour .
+:margharitaPizza :contains :egg .
+:margharitaPizza :contains :water .
+:margharitaPizza :contains :cheese .
+:margharitaPizza :contains :tomato .
+:margharitaPizza :contains :basil .
+
+:hamburger a :dish .
+:hamburger foaf:name "hamburger" .
+:hamburger :contains :bread .
+:hamburger :contains :tomato .
+:hamburger :contains :pickles .
+:hamburger :contains :cheese .
+:hamburger :contains :onion .
+:hamburger :contains :lettuce .
+:hamburger :contains :mincedMeat .
+:hamburger :contains :ketchup .
+
+:brownie a :dish .
+:brownie :contains :chocolate .
+:brownie :contains :flour .
+:brownie :contains :egg .
+:brownie :contains :sugar .
+:brownie :contains :butter .
+:brownie :contains :walnut .
 
 #the fridge
 :fridge a rdfs:Class .
@@ -133,3 +201,4 @@
 
 :fridge :hasFood :lemon .
 :fridge :hasFood :bacon .
+:fridge :hasFood :milk .

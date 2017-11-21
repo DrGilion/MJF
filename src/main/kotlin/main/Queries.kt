@@ -21,7 +21,8 @@ WHERE {
     ?t  rdfs:subClassOf mjf:food .
     ?food a ?t ;
     foaf:name ?foodName .
-}""",
+}
+ORDER BY ?foodName """,
 
 			"Refrigerator Contents" to """
 PREFIX foaf: <http://xmlns.com/foaf/0.1/>
@@ -55,7 +56,7 @@ PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX mjf: <http://michajonasfood.com/>
 SELECT ?foodName (sum(?calories) as ?totalCalories)
 WHERE {
-	?food a mjf:dish ;
+	?food foaf:name "margharita" ;
 	      mjf:contains ?ingredient ;
 		  foaf:name ?foodName .
 	?ingredient mjf:caloriesPer100g ?calories .
@@ -83,7 +84,7 @@ PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX mjf: <http://michajonasfood.com/>
 ASK {
-	?pizza foaf:name "margarita" .
+	?pizza foaf:name "margharita" .
 	FILTER EXISTS { ?pizza mjf:contains mjf:basil } .
 }""",
 

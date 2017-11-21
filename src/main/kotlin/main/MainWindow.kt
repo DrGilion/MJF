@@ -82,6 +82,37 @@ class MainWindow : View("Micha-Jonas-Food Project") {
 				}
 			}
 
+            row {
+                val constructBox = combobox(values = Queries.constructQueries.entries.toList()) {
+                    useMaxWidth = true
+                    gridpaneConstraints { margin = tornadofx.insets(5) }
+                    cellFormat { text = it.key }
+
+                    selectionModel.selectedItemProperty().onChange {
+                        queryText.value = it?.value
+                    }
+                    selectionModel.selectFirst()
+                }
+
+                button("Execute Construct Query") {
+                    useMaxWidth = true
+                    gridpaneConstraints { margin = tornadofx.insets(5) }
+
+                    action {
+                        val query = constructBox.selectionModel.selectedItem.value
+
+                        val result = QueryExecutionFactory.create(query, Syntax.syntaxARQ, model)
+                        val newGraph = result.execConstructTriples()
+
+                        queryText.value = query
+                        outputText.value = newGraph.asSequence()
+								.map { "" + it.subject.localName + " " + it.predicate.localName + " " + it.`object`.localName + "\n" }
+								.joinToString()
+								.replace(", ","")
+                    }
+                }
+            }
+
 			center = hbox(5) {
 				vbox {
 					label("Query")

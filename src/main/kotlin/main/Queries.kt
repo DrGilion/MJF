@@ -100,4 +100,17 @@ ASK {
 	mjf:fridge mjf:hasFood ?x
 }"""
 	)
+
+    val constructQueries = mapOf(
+            "How does a dish taste ?" to """
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX mjf: <http://michajonasfood.com/>
+CONSTRUCT { ?dish mjf:couldTaste ?taste . }
+WHERE {
+	?dish mjf:contains ?food .
+	OPTIONAL { ?food mjf:tastes ?taste }
+}"""
+    )
 }

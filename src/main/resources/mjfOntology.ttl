@@ -117,14 +117,14 @@
 :basil foaf:name "basil" .
 :basil :caloriesPer100g 22 .
 
-:margarithaPizza a :dish .
-:margarithaPizza foaf:name "margarita" .
-:margarithaPizza :contains :flour .
-:margarithaPizza :contains :egg .
-:margarithaPizza :contains :water .
-:margarithaPizza :contains :cheese .
-:margarithaPizza :contains :tomato .
-:margarithaPizza :contains :basil .
+:margaritaPizza a :dish .
+:margaritaPizza foaf:name "margarita" .
+:margaritaPizza :contains :flour .
+:margaritaPizza :contains :egg .
+:margaritaPizza :contains :water .
+:margaritaPizza :contains :cheese .
+:margaritaPizza :contains :tomato .
+:margaritaPizza :contains :basil .
 
 #the fridge
 :fridge a rdfs:Class .

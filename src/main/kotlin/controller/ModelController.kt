@@ -11,101 +11,107 @@ import java.io.File
 import java.io.FileOutputStream
 
 class ModelController : Controller() {
-	val model: Model = ModelFactory.createDefaultModel()
+	val model: Model
 
 	init {
-		createTBox()
-		loadFromFile()
-		exportWholeModel()
+		val tboxModel = createTBox()
+		val aboxModel = loadABoxFromFile()
+
+		val tempModel = tboxModel.add(aboxModel)
+
+		model = ModelFactory.createRDFSModel(tempModel)
 	}
 
-	private fun createTBox() {
+	private fun createTBox(): Model {
+		val tboxModel = ModelFactory.createDefaultModel()
+
 		val mjfns = "http://michajonasfood.com/"
 		val dbons = "http://dbpedia.org/ontology/"
 
-		model.add(model.createResource(mjfns), RDF.type, OWL.Ontology)
+		tboxModel.add(tboxModel.createResource(mjfns), RDF.type, OWL.Ontology)
 
-		val food = model.createResource(mjfns + "food")
-		model.add(food, RDF.type, RDFS.Class)
-		model.add(food, OWL.sameAs, dbons + "Food")
+		val food = tboxModel.createResource(mjfns + "food")
+		tboxModel.add(food, RDF.type, RDFS.Class)
+		tboxModel.add(food, OWL.sameAs, dbons + "Food")
 
-		val fruit = model.createResource(mjfns + "fruit")
-		model.add(fruit, RDFS.subClassOf, food)
+		val fruit = tboxModel.createResource(mjfns + "fruit")
+		tboxModel.add(fruit, RDFS.subClassOf, food)
 
-		val vegetable = model.createResource(mjfns + "vegetable")
-		model.add(vegetable, RDFS.subClassOf, food)
+		val vegetable = tboxModel.createResource(mjfns + "vegetable")
+		tboxModel.add(vegetable, RDFS.subClassOf, food)
 
-		val animalProduct = model.createResource(mjfns + "animalProduct")
-		model.add(animalProduct, RDFS.subClassOf, food)
+		val animalProduct = tboxModel.createResource(mjfns + "animalProduct")
+		tboxModel.add(animalProduct, RDFS.subClassOf, food)
 
-		val spice = model.createResource(mjfns + "spice")
-		model.add(spice, RDFS.subClassOf, food)
+		val spice = tboxModel.createResource(mjfns + "spice")
+		tboxModel.add(spice, RDFS.subClassOf, food)
 
-		val meat = model.createResource(mjfns + "meat")
-		model.add(meat, RDFS.subClassOf, food)
+		val meat = tboxModel.createResource(mjfns + "meat")
+		tboxModel.add(meat, RDFS.subClassOf, food)
 
-		val fish = model.createResource(mjfns + "fish")
-		model.add(fish, RDFS.subClassOf, food)
+		val fish = tboxModel.createResource(mjfns + "fish")
+		tboxModel.add(fish, RDFS.subClassOf, food)
 
-		val cereal = model.createResource(mjfns + "cereal")
-		model.add(cereal, RDFS.subClassOf, food)
+		val cereal = tboxModel.createResource(mjfns + "cereal")
+		tboxModel.add(cereal, RDFS.subClassOf, food)
 
-		val nut = model.createResource(mjfns + "nut")
-		model.add(nut, RDFS.subClassOf, food)
+		val nut = tboxModel.createResource(mjfns + "nut")
+		tboxModel.add(nut, RDFS.subClassOf, food)
 
-		val liquid = model.createResource(mjfns + "liquid")
-		model.add(liquid, RDFS.subClassOf, food)
+		val liquid = tboxModel.createResource(mjfns + "liquid")
+		tboxModel.add(liquid, RDFS.subClassOf, food)
 
-		val dish = model.createResource(mjfns + "dish")
-		model.add(dish, RDFS.subClassOf, food)
+		val dish = tboxModel.createResource(mjfns + "dish")
+		tboxModel.add(dish, RDFS.subClassOf, food)
 
-		val contains = model.createProperty(mjfns, "contains")
-		model.add(contains.asResource(), RDFS.domain, dish)
-		model.add(contains.asResource(), RDFS.range, food)
+		val contains = tboxModel.createProperty(mjfns, "contains")
+		tboxModel.add(contains.asResource(), RDFS.domain, dish)
+		tboxModel.add(contains.asResource(), RDFS.range, food)
 
-		val taste = model.createResource(mjfns + "taste")
-		model.add(taste, RDF.type, RDFS.Class)
+		val taste = tboxModel.createResource(mjfns + "taste")
+		tboxModel.add(taste, RDF.type, RDFS.Class)
 
-		val smell = model.createResource(mjfns + "smell")
-		model.add(smell, RDF.type, RDFS.Class)
+		val smell = tboxModel.createResource(mjfns + "smell")
+		tboxModel.add(smell, RDF.type, RDFS.Class)
 
-		val characteristic = model.createProperty(mjfns, "Characteristic")
+		val characteristic = tboxModel.createProperty(mjfns, "Characteristic")
 
-		val tastes = model.createProperty(mjfns, "tastes")
-		model.add(tastes.asResource(), RDFS.subPropertyOf, characteristic)
-		model.add(tastes.asResource(), RDFS.domain, food)
-		model.add(tastes.asResource(), RDFS.range, taste)
+		val tastes = tboxModel.createProperty(mjfns, "tastes")
+		tboxModel.add(tastes.asResource(), RDFS.subPropertyOf, characteristic)
+		tboxModel.add(tastes.asResource(), RDFS.domain, food)
+		tboxModel.add(tastes.asResource(), RDFS.range, taste)
 
-		val smells = model.createProperty(mjfns, "smells")
-		model.add(smells.asResource(), RDFS.subPropertyOf, characteristic)
-		model.add(smells.asResource(), RDFS.domain, food)
-		model.add(smells.asResource(), RDFS.range, smell)
+		val smells = tboxModel.createProperty(mjfns, "smells")
+		tboxModel.add(smells.asResource(), RDFS.subPropertyOf, characteristic)
+		tboxModel.add(smells.asResource(), RDFS.domain, food)
+		tboxModel.add(smells.asResource(), RDFS.range, smell)
 
-		val sugarAmountPer100g = model.createProperty(mjfns, "sugarAmountPer100g")
-		model.add(sugarAmountPer100g.asResource(), RDFS.subPropertyOf, characteristic)
-		model.add(sugarAmountPer100g.asResource(), RDFS.domain, food)
-		model.add(sugarAmountPer100g.asResource(), RDFS.range, XSD.xdouble)
+		val sugarAmountPer100g = tboxModel.createProperty(mjfns, "sugarAmountPer100g")
+		tboxModel.add(sugarAmountPer100g.asResource(), RDFS.subPropertyOf, characteristic)
+		tboxModel.add(sugarAmountPer100g.asResource(), RDFS.domain, food)
+		tboxModel.add(sugarAmountPer100g.asResource(), RDFS.range, XSD.xdouble)
 
-		val caloriesPer100g = model.createProperty(mjfns, "caloriesPer100g")
-		model.add(caloriesPer100g.asResource(), RDFS.subPropertyOf, characteristic)
-		model.add(caloriesPer100g.asResource(), RDFS.domain, food)
-		model.add(caloriesPer100g.asResource(), RDFS.range, XSD.integer)
+		val caloriesPer100g = tboxModel.createProperty(mjfns, "caloriesPer100g")
+		tboxModel.add(caloriesPer100g.asResource(), RDFS.subPropertyOf, characteristic)
+		tboxModel.add(caloriesPer100g.asResource(), RDFS.domain, food)
+		tboxModel.add(caloriesPer100g.asResource(), RDFS.range, XSD.integer)
+
+		return tboxModel
 	}
 
-	private fun loadFromFile() {
+	private fun loadABoxFromFile(): Model {
 		val fileModel = ModelFactory.createDefaultModel()
 		fileModel.read("mjfOntology.ttl", "TURTLE")
-		model.add(fileModel)
+		return fileModel
 	}
 
-	private fun exportWholeModel() {
+	fun exportWholeModel(file: File) {
 		try {
-			val file = File("mjf.rdf")
 			val fos = FileOutputStream(file)
 
 			if (!file.exists()) file.createNewFile()
 
-			model.write(fos, "RDF/XML")
+			model.write(fos, "TTL")
 
 			fos.flush()
 			fos.close()

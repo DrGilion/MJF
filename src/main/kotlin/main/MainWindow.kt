@@ -4,6 +4,7 @@ import controller.ModelController
 import javafx.beans.property.SimpleStringProperty
 import javafx.scene.layout.Priority
 import javafx.scene.text.Font
+import javafx.stage.FileChooser
 import org.apache.jena.query.QueryExecutionFactory
 import org.apache.jena.query.ResultSetFormatter
 import org.apache.jena.query.Syntax
@@ -135,6 +136,21 @@ class MainWindow : View("Micha-Jonas-Food Project") {
 
 					hgrow = Priority.ALWAYS
 					vgrow = Priority.ALWAYS
+				}
+			}
+
+			bottom {
+				buttonbar {
+					paddingTop = 5
+					button("Export Model").action {
+						val fileChoose = FileChooser()
+						fileChoose.initialFileName = "mjf.rdf"
+						fileChoose.extensionFilters.add(FileChooser.ExtensionFilter("RDF", "*.rdf"))
+						val file = fileChoose.showSaveDialog(this@MainWindow.currentWindow)
+
+						if(file != null)
+							modelController.exportWholeModel(file)
+					}
 				}
 			}
 		}

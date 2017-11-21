@@ -204,3 +204,40 @@
 :fridge :hasFood :bacon .
 :fridge :hasFood :milk .
 :fridge :hasFood :brownie .
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#DONT JUDGE! ITS FOR THE GREATER GOOD!
+dbpedia:Mayonnaise a dbpedia:Musical_instrument .

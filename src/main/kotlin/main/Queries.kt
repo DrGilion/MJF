@@ -98,6 +98,19 @@ PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX mjf: <http://michajonasfood.com/>
 ASK {
 	mjf:fridge mjf:hasFood ?x
+}""",
+
+			"Exists is bitter a taste?" to """
+PREFIX mjf: <http://michajonasfood.com/>
+ASK {
+	mjf:bitter a mjf:taste .
+}""",
+
+			"Is mayonaise an instrument?" to """
+PREFIX dbr: <http://dbpedia.org/resource/>
+PREFIX mjf: <http://michajonasfood.com/>
+ASK {
+	dbr:Mayonnaise a dbr:Musical_instrument .
 }"""
 	)
 

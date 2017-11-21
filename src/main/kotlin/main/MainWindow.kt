@@ -48,6 +48,7 @@ class MainWindow : View("Micha-Jonas-Food Project") {
 						val result = QueryExecutionFactory.create(query, Syntax.syntaxARQ, model)
 						val results = result.execSelect()
 
+						queryText.value = query
 						outputText.value = ResultSetFormatter.asText(results)
 					}
 				}
@@ -75,6 +76,7 @@ class MainWindow : View("Micha-Jonas-Food Project") {
 						val result = QueryExecutionFactory.create(query, Syntax.syntaxARQ, model)
 						val boolVal = result.execAsk()
 
+						queryText.value = query
 						outputText.value = boolVal.toString()
 					}
 				}

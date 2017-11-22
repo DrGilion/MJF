@@ -111,7 +111,7 @@ class ModelController : Controller() {
 
 			if (!file.exists()) file.createNewFile()
 
-			model.write(fos, "TTL")
+			model.write(fos, "RDF/XML")
 
 			fos.flush()
 			fos.close()

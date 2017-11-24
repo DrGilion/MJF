@@ -64,9 +64,21 @@ class ModelController : Controller() {
 		val dish = tboxModel.createResource(mjfns + "dish")
 		tboxModel.add(dish, RDFS.subClassOf, food)
 
+		val ingredient = tboxModel.createResource(mjfns + "ingredient")
+		tboxModel.add(ingredient, RDF.type, RDFS.Class)
+		val foodItem = tboxModel.createProperty(mjfns, "foodItem")
+		tboxModel.add(foodItem.asResource(), RDFS.domain, ingredient)
+		tboxModel.add(foodItem.asResource(), RDFS.range, food)
+		val quantity = tboxModel.createProperty(mjfns, "quantity")
+		tboxModel.add(quantity.asResource(), RDFS.domain, ingredient)
+		tboxModel.add(quantity.asResource(), RDFS.range, XSD.decimal)
+		val uom = tboxModel.createProperty(mjfns, "UOM")
+		tboxModel.add(uom.asResource(), RDFS.domain, ingredient)
+		tboxModel.add(uom.asResource(), RDFS.range, RDFS.Literal)
+
 		val contains = tboxModel.createProperty(mjfns, "contains")
 		tboxModel.add(contains.asResource(), RDFS.domain, dish)
-		tboxModel.add(contains.asResource(), RDFS.range, food)
+		tboxModel.add(contains.asResource(), RDFS.range, ingredient)
 
 		val taste = tboxModel.createResource(mjfns + "taste")
 		tboxModel.add(taste, RDF.type, RDFS.Class)

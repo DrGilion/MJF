@@ -166,34 +166,39 @@
 :walnut :tastes :bitter .
 :walnut :caloriesPer100g 678 .
 
-:margharitaPizza a :dish .
-:margharitaPizza foaf:name "margharita" .
-:margharitaPizza :contains :flour .
-:margharitaPizza :contains :egg .
-:margharitaPizza :contains :water .
-:margharitaPizza :contains :cheese .
-:margharitaPizza :contains :tomato .
-:margharitaPizza :contains :basil .
+:omelette a :dish ;
+    foaf:name "omelette" ;
+    :contains [ :foodItem :egg ; :quantity 2 ; :UOM "pieces" ] ;
+    :contains [ :foodItem :milk ; :quantity 50 ; :UOM "ml" ] .
 
-:hamburger a :dish .
-:hamburger foaf:name "hamburger" .
-:hamburger :contains :bread .
-:hamburger :contains :tomato .
-:hamburger :contains :pickles .
-:hamburger :contains :cheese .
-:hamburger :contains :onion .
-:hamburger :contains :lettuce .
-:hamburger :contains :mincedMeat .
-:hamburger :contains :ketchup .
+:margharitaPizza a :dish ;
+    foaf:name "margharita" ;
+    :contains [ :foodItem :flour ; :quantity 150 ; :UOM "g" ] ;
+    :contains [ :foodItem :egg ; :quantity 1 ; :UOM "pieces" ] ;
+    :contains [ :foodItem :water ; :quantity 50 ; :UOM "ml" ] ;
+    :contains [ :foodItem :cheese ; :quantity 100 ; :UOM "g" ] ;
+    :contains [ :foodItem :tomato ; :quantity 2 ; :UOM "pieces" ] ;
+    :contains [ :foodItem :basil ; :quantity 1 ; :UOM "bundle" ] .
 
-:brownie a :dish .
-:brownie foaf:name "brownie" .
-:brownie :contains :chocolate .
-:brownie :contains :flour .
-:brownie :contains :egg .
-:brownie :contains :sugar .
-:brownie :contains :butter .
-:brownie :contains :walnut .
+:hamburger a :dish ;
+    foaf:name "hamburger" ;
+    :contains [ :foodItem :bread ; :quantity 1 ; :UOM "pieces" ] ;
+    :contains [ :foodItem :tomato ; :quantity 0.5 ; :UOM "pieces" ] ;
+    :contains [ :foodItem :pickles ; :quantity 1 ; :UOM "pieces" ] ;
+    :contains [ :foodItem :cheese ; :quantity 2 ; :UOM "slices" ] ;
+    :contains [ :foodItem :onion ; :quantity 1 ; :UOM "slice" ] ;
+    :contains [ :foodItem :lettuce ; :quantity 1 ; :UOM "leaf" ] ;
+    :contains [ :foodItem :mincedMeat ; :quantity 100 ; :UOM "g" ] ;
+    :contains [ :foodItem :ketchup ; :quantity 20 ; :UOM "ml" ] .
+
+:brownie a :dish ;
+    foaf:name "brownie" ;
+    :contains [ :foodItem :chocolate ; :quantity 200 ; :UOM "g" ] ;
+    :contains [ :foodItem :flour ; :quantity 200 ; :UOM "g" ] ;
+    :contains [ :foodItem :egg ; :quantity 2 ; :UOM "pieces" ] ;
+    :contains [ :foodItem :sugar ; :quantity 100 ; :UOM "g" ] ;
+    :contains [ :foodItem :butter ; :quantity 50 ; :UOM "g" ] ;
+    :contains [ :foodItem :walnut ; :quantity 50 ; :UOM "g" ] .
 
 #the fridge
 :fridge a rdfs:Class .

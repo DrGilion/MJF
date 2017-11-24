@@ -77,6 +77,21 @@ WHERE {
 	?food a ?foodType ;
 	      foaf:name ?foodName .
 	FILTER NOT EXISTS { ?food mjf:caloriesPer100g ?calories }
+}""",
+
+			"Recipes with Ingredients" to """
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX mjf: <http://michajonasfood.com/>
+SELECT ?dishName ?foodName ?quantity ?UnitOfMeasurement
+WHERE {
+?dish a mjf:dish ;
+	  foaf:name ?dishName ;
+	  mjf:contains [ mjf:quantity ?quantity ;
+					 mjf:UOM ?UnitOfMeasurement ;
+					 mjf:foodItem [ foaf:name ?foodName ]
+					] .
 }"""
 	)
 

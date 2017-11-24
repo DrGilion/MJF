@@ -2,6 +2,7 @@ package main
 
 import controller.ModelController
 import javafx.beans.property.SimpleStringProperty
+import javafx.geometry.Pos
 import javafx.scene.layout.Priority
 import javafx.scene.text.Font
 import javafx.stage.FileChooser
@@ -23,7 +24,8 @@ class MainWindow : View("Micha-Jonas-Food Project") {
 		top = gridpane {
 			paddingBottom = 5
 			row {
-				val selectBox = combobox(values = Queries.selectQueries.entries.toList()) {
+				label("Templates: ")
+				combobox(values = Queries.queries.entries.toList()) {
 					useMaxWidth = true
 					gridpaneConstraints { margin = tornadofx.insets(5) }
 					cellFormat { text = it.key }
@@ -32,80 +34,6 @@ class MainWindow : View("Micha-Jonas-Food Project") {
 						queryText.value = it?.value
 					}
 					selectionModel.selectFirst()
-				}
-
-				button("Execute Select Query") {
-					useMaxWidth = true
-					gridpaneConstraints { margin = tornadofx.insets(5) }
-
-					action {
-						val query = selectBox.selectionModel.selectedItem.value
-
-						val result = QueryExecutionFactory.create(query, Syntax.syntaxARQ, modelController.model)
-						val results = result.execSelect()
-
-						queryText.value = query
-						outputText.value = ResultSetFormatter.asText(results)
-					}
-				}
-			}
-
-			row {
-				val askBox = combobox(values = Queries.askQueries.entries.toList()) {
-					useMaxWidth = true
-					gridpaneConstraints { margin = tornadofx.insets(5) }
-					cellFormat { text = it.key }
-
-					selectionModel.selectedItemProperty().onChange {
-						queryText.value = it?.value
-					}
-					selectionModel.selectFirst()
-				}
-
-				button("Execute Ask Query") {
-					useMaxWidth = true
-					gridpaneConstraints { margin = tornadofx.insets(5) }
-
-					action {
-						val query = askBox.selectionModel.selectedItem.value
-
-						val result = QueryExecutionFactory.create(query, Syntax.syntaxARQ, modelController.model)
-						val boolVal = result.execAsk()
-
-						queryText.value = query
-						outputText.value = boolVal.toString()
-					}
-				}
-			}
-
-			row {
-				val constructBox = combobox(values = Queries.constructQueries.entries.toList()) {
-					useMaxWidth = true
-					gridpaneConstraints { margin = tornadofx.insets(5) }
-					cellFormat { text = it.key }
-
-					selectionModel.selectedItemProperty().onChange {
-						queryText.value = it?.value
-					}
-					selectionModel.selectFirst()
-				}
-
-				button("Execute Construct Query") {
-					useMaxWidth = true
-					gridpaneConstraints { margin = tornadofx.insets(5) }
-
-					action {
-						val query = constructBox.selectionModel.selectedItem.value
-
-						val result = QueryExecutionFactory.create(query, Syntax.syntaxARQ, modelController.model)
-						val newGraph = result.execConstructTriples()
-
-						queryText.value = query
-						outputText.value = newGraph.asSequence()
-								.map { "" + it.subject.localName + " " + it.predicate.localName + " " + it.`object`.localName + "\n" }
-								.joinToString()
-								.replace(", ", "")
-					}
 				}
 			}
 
@@ -116,7 +44,7 @@ class MainWindow : View("Micha-Jonas-Food Project") {
 						hgrow = Priority.ALWAYS
 						vgrow = Priority.ALWAYS
 
-						isEditable = false
+						isEditable = true
 						font = Font.font("Monospaced")
 					}
 
@@ -124,6 +52,38 @@ class MainWindow : View("Micha-Jonas-Food Project") {
 					vgrow = Priority.ALWAYS
 				}
 
+				vbox(5) {
+					alignment = Pos.CENTER
+					button("go!"){
+						useMaxWidth = true
+						gridpaneConstraints { margin = tornadofx.insets(5) }
+
+						action {
+							val result = QueryExecutionFactory.create(queryText.value, Syntax.syntaxARQ, modelController.model)
+							when{
+								queryText.value.contains("select",ignoreCase = true) -> {
+									val results = result.execSelect()
+									outputText.value = ResultSetFormatter.asText(results)
+								}
+								queryText.value.contains("ask",ignoreCase = true) -> {
+									val boolVal = result.execAsk()
+									outputText.value = boolVal.toString()
+								}
+								queryText.value.contains("construct",ignoreCase = true) -> {
+									val newGraph = result.execConstructTriples()
+									outputText.value = newGraph.asSequence()
+											.map { "" + it.subject.localName + " " + it.predicate.localName + " " + it.`object`.localName + "\n" }
+											.joinToString()
+											.replace(", ", "")
+								}
+								else -> {
+									outputText.value = "error!"
+								}
+							}
+						}
+					}
+					label("--->")
+				}
 				vbox {
 					label("Result")
 					textarea(outputText) {

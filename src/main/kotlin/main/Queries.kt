@@ -1,7 +1,7 @@
 package main
 
 object Queries {
-	val selectQueries = mapOf(
+	val queries = mapOf(
 			"All Food Types" to """
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
@@ -92,10 +92,8 @@ WHERE {
 					 mjf:UOM ?UnitOfMeasurement ;
 					 mjf:foodItem [ foaf:name ?foodName ]
 					] .
-}"""
-	)
+}""",
 
-	val askQueries = mapOf(
 			"Does Margharita pizza contain basil?" to """
 PREFIX foaf: <http://xmlns.com/foaf/0.1/>
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
@@ -126,10 +124,8 @@ PREFIX dbr: <http://dbpedia.org/resource/>
 PREFIX mjf: <http://michajonasfood.com/>
 ASK {
 	dbr:Mayonnaise a dbr:Musical_instrument .
-}"""
-	)
+}""",
 
-    val constructQueries = mapOf(
             "How does a dish taste ?" to """
 PREFIX foaf: <http://xmlns.com/foaf/0.1/>
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>

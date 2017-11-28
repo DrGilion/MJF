@@ -14,12 +14,11 @@ class QueryController : Controller() {
 		return when {
 			query.contains("select", ignoreCase = true) -> result.execSelect().toText()
 			query.contains("ask", ignoreCase = true) -> result.execAsk().toString()
-
 			query.contains("construct", ignoreCase = true) -> {
 				result.execConstructTriples()
 						.asSequence()
-						.map { "${it.subject.localName} ${it.predicate.localName} ${it.`object`.localName}\n" }
-						.reduce { acc, s -> acc + s }
+						.map { "${it.subject.localName} ${it.predicate.localName} ${it.`object`.localName}" }
+						.joinToString("\n")
 			}
 			else -> "error!"
 		}

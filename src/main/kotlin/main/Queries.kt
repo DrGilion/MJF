@@ -8,7 +8,7 @@ PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX mjf: <http://michajonasfood.com/>
 SELECT DISTINCT ?x
 WHERE {
-	?x  rdfs:subClassOf mjf:food .
+    ?x  rdfs:subClassOf mjf:food .
 }""",
 
 			"All Food" to """
@@ -18,12 +18,14 @@ PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX mjf: <http://michajonasfood.com/>
 SELECT DISTINCT ?foodName
 WHERE {
-    {?t rdfs:subClassOf mjf:food .
-    ?food a ?t ;
-    foaf:name ?foodName .}
-    union
-    { ?food a mjf:food ;
-    	foaf:name ?foodName }
+    {
+        ?t rdfs:subClassOf mjf:food .
+        ?food a ?t ;
+              foaf:name ?foodName .
+    } UNION { ?
+        food a mjf:food ;
+             foaf:name ?foodName
+    }
 }
 ORDER BY ?foodName """,
 
@@ -34,8 +36,8 @@ PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX mjf: <http://michajonasfood.com/>
 SELECT DISTINCT ?foodName
 WHERE {
-	mjf:fridge  mjf:hasFood ?f .
-	?f foaf:name ?foodName .
+    mjf:fridge  mjf:hasFood ?f .
+    ?f foaf:name ?foodName .
 }""",
 
 			"Food with Calories" to """
@@ -47,8 +49,8 @@ SELECT DISTINCT ?foodName ?calories
 WHERE {
     ?t  rdfs:subClassOf mjf:food .
     ?food a ?t ;
-	foaf:name ?foodName .
-	OPTIONAL { ?food mjf:caloriesPer100g ?calories }
+          foaf:name ?foodName .
+    OPTIONAL { ?food mjf:caloriesPer100g ?calories }
 }
 ORDER BY DESC (?calories)""",
 
@@ -57,12 +59,12 @@ PREFIX foaf: <http://xmlns.com/foaf/0.1/>
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX mjf: <http://michajonasfood.com/>
-SELECT ?foodName (sum(?calories) as ?totalCalories)
+SELECT ?foodName (sum(?calories * ?quantity / 100.0) as ?totalCalories)
 WHERE {
-	?food foaf:name "margharita" ;
-	      mjf:contains ?ingredient ;
-		  foaf:name ?foodName .
-	?ingredient mjf:caloriesPer100g ?calories .
+    ?food foaf:name "margharita" ;
+          mjf:contains [ mjf:foodItem ?ingredient ; mjf:quantity ?quantity ] ;
+          foaf:name ?foodName .
+    ?ingredient mjf:caloriesPer100g ?calories .
 }
 GROUP BY ?foodName""",
 
@@ -73,10 +75,10 @@ PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX mjf: <http://michajonasfood.com/>
 SELECT DISTINCT ?foodName
 WHERE {
-	?foodType rdfs:subClassOf mjf:food .
-	?food a ?foodType ;
-	      foaf:name ?foodName .
-	FILTER NOT EXISTS { ?food mjf:caloriesPer100g ?calories }
+    ?foodType rdfs:subClassOf mjf:food .
+    ?food a ?foodType ;
+          foaf:name ?foodName .
+    FILTER NOT EXISTS { ?food mjf:caloriesPer100g ?calories }
 }""",
 
 			"Recipes with Ingredients" to """
@@ -86,12 +88,13 @@ PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX mjf: <http://michajonasfood.com/>
 SELECT ?dishName ?foodName ?quantity ?UnitOfMeasurement
 WHERE {
-?dish a mjf:dish ;
-	  foaf:name ?dishName ;
-	  mjf:contains [ mjf:quantity ?quantity ;
-					 mjf:UOM ?UnitOfMeasurement ;
-					 mjf:foodItem [ foaf:name ?foodName ]
-					] .
+    ?dish a mjf:dish ;
+          foaf:name ?dishName ;
+          mjf:contains [ 
+              mjf:quantity ?quantity ;
+              mjf:UOM ?UnitOfMeasurement ;
+              mjf:foodItem [ foaf:name ?foodName ]
+          ] .
 }""",
 
 			"Does Margharita pizza contain basil?" to """
@@ -100,8 +103,8 @@ PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX mjf: <http://michajonasfood.com/>
 ASK {
-	?pizza foaf:name "margharita" .
-	FILTER EXISTS { ?pizza mjf:contains mjf:basil } .
+    ?pizza foaf:name "margharita" .
+    FILTER EXISTS { ?pizza mjf:contains mjf:basil } .
 }""",
 
 			"Is something in fridge ?" to """
@@ -110,31 +113,31 @@ PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX mjf: <http://michajonasfood.com/>
 ASK {
-	mjf:fridge mjf:hasFood ?x
+    mjf:fridge mjf:hasFood ?x
 }""",
 
 			"Exists is bitter a taste?" to """
 PREFIX mjf: <http://michajonasfood.com/>
 ASK {
-	mjf:bitter a mjf:taste .
+    mjf:bitter a mjf:taste .
 }""",
 
 			"Is mayonaise an instrument?" to """
 PREFIX dbr: <http://dbpedia.org/resource/>
 PREFIX mjf: <http://michajonasfood.com/>
 ASK {
-	dbr:Mayonnaise a dbr:Musical_instrument .
+    dbr:Mayonnaise a dbr:Musical_instrument .
 }""",
 
-            "How does a dish taste ?" to """
+			"How does a dish taste ?" to """
 PREFIX foaf: <http://xmlns.com/foaf/0.1/>
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX mjf: <http://michajonasfood.com/>
 CONSTRUCT { ?dish mjf:couldTaste ?taste . }
 WHERE {
-	?dish mjf:contains ?food .
-	OPTIONAL { ?food mjf:tastes ?taste }
+    ?dish mjf:contains [ mjf:foodItem ?food ] .
+    OPTIONAL { ?food mjf:tastes ?taste }
 }"""
-    )
+	)
 }

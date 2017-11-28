@@ -14,13 +14,7 @@ class QueryController : Controller() {
 		return when {
 			query.contains("select", ignoreCase = true) -> result.execSelect().toText()
 			query.contains("ask", ignoreCase = true) -> result.execAsk().toString()
-			query.contains("construct", ignoreCase = true) -> {
-				result.execConstructTriples()
-						.asSequence()
-						.joinToString("\n") {
-							"${it.subject.localName} ${it.predicate.localName} ${it.`object`.localName}"
-						}
-			}
+			query.contains("construct", ignoreCase = true) -> result.execConstructTriples().toText()
 			else -> "error!"
 		}
 	}

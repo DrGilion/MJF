@@ -127,7 +127,7 @@ class ModelController : Controller() {
 
 			fos.flush()
 			fos.close()
-		} catch (e : Exception) {
+		} catch (e: Exception) {
 			e.printStackTrace()
 		}
 	}

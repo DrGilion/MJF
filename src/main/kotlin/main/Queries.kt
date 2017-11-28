@@ -22,8 +22,8 @@ WHERE {
         ?t rdfs:subClassOf mjf:food .
         ?food a ?t ;
               foaf:name ?foodName .
-    } UNION { ?
-        food a mjf:food ;
+    } UNION {
+        ?food a mjf:food ;
              foaf:name ?foodName
     }
 }
@@ -34,9 +34,11 @@ PREFIX foaf: <http://xmlns.com/foaf/0.1/>
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX mjf: <http://michajonasfood.com/>
-SELECT DISTINCT ?foodName
+SELECT ?fridgeName ?foodName
 WHERE {
-    mjf:fridge  mjf:hasFood ?f .
+    ?fridge a mjf:fridge ;
+        foaf:name ?fridgeName ;
+        mjf:hasFood ?f .
     ?f foaf:name ?foodName .
 }""",
 
@@ -107,16 +109,16 @@ ASK {
     FILTER EXISTS { ?pizza mjf:contains mjf:basil } .
 }""",
 
-			"Is something in fridge ?" to """
+			"Is something in Michaels fridge ?" to """
 PREFIX foaf: <http://xmlns.com/foaf/0.1/>
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX mjf: <http://michajonasfood.com/>
 ASK {
-    mjf:fridge mjf:hasFood ?x
+    mjf:MichasFridge mjf:hasFood ?x
 }""",
 
-			"Exists is bitter a taste?" to """
+			"Is bitter a taste?" to """
 PREFIX mjf: <http://michajonasfood.com/>
 ASK {
     mjf:bitter a mjf:taste .
@@ -138,6 +140,6 @@ CONSTRUCT { ?dish mjf:couldTaste ?taste . }
 WHERE {
     ?dish mjf:contains [ mjf:foodItem ?food ] .
     OPTIONAL { ?food mjf:tastes ?taste }
-}"""
+} ORDER BY ?dish"""
 	)
 }

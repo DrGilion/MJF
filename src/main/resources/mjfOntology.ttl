@@ -200,15 +200,26 @@
     :contains [ :foodItem :butter ; :quantity 50 ; :UOM "g" ] ;
     :contains [ :foodItem :walnut ; :quantity 50 ; :UOM "g" ] .
 
-#the fridge
+#the fridges
 :fridge a rdfs:Class .
 :hasFood rdfs:domain :fridge .
 :hasFood rdfs:range :food .
 
-:fridge :hasFood :lemon .
-:fridge :hasFood :bacon .
-:fridge :hasFood :milk .
-:fridge :hasFood :brownie .
+:MichasFridge a :fridge .
+:MichasFridge foaf:name "Micha's Kühlschrank" .
+:MichasFridge :hasFood :lemon .
+:MichasFridge :hasFood :bacon .
+:MichasFridge :hasFood :milk .
+:MichasFridge :hasFood :brownie .
+
+:JonasFridge a :fridge .
+:JonasFridge foaf:name "Jonas' Kühlschrank" .
+:JonasFridge :hasFood :onion .
+:JonasFridge :hasFood :bacon .
+:JonasFridge :hasFood :milk .
+:JonasFridge :hasFood :brownie .
+:JonasFridge :hasFood :ketchup .
+:JonasFridge :hasFood :mincedMeat .
 
 
 

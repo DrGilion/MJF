@@ -17,8 +17,9 @@ class QueryController : Controller() {
 			query.contains("construct", ignoreCase = true) -> {
 				result.execConstructTriples()
 						.asSequence()
-						.map { "${it.subject.localName} ${it.predicate.localName} ${it.`object`.localName}" }
-						.joinToString("\n")
+						.joinToString("\n") {
+							"${it.subject.localName} ${it.predicate.localName} ${it.`object`.localName}"
+						}
 			}
 			else -> "error!"
 		}

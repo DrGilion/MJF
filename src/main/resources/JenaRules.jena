@@ -1,0 +1,8 @@
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix : <http://michajonasfood.com/> .
+
+[unhealthyFood: (?f rdf:type :food) (?f :caloriesPer100g ?c) greaterThan(?c, 300) -> (?f rdf:type :unhealthyFood)]
+[removeMeatVeggiFoods: (?f rdf:type :meat) (?f rdf:type :vegetable) -> remove(1)]
+[createSandwiches: (?f :contains ?b) (?b :foodItem :bread) (?f :contains ?c) (?c :foodItem :cheese) -> (?f rdf:type :sandwich)]

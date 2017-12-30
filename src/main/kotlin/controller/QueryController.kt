@@ -9,7 +9,7 @@ class QueryController : Controller() {
 	private val modelController: ModelController by inject()
 
 	fun executeQuery(query: String): String {
-		val result = QueryExecutionFactory.create(query, Syntax.syntaxARQ, modelController.model)
+		val result = QueryExecutionFactory.create(query, Syntax.syntaxARQ, modelController.jenaModel)
 
 		return when {
 			query.contains("select", ignoreCase = true) -> result.execSelect().toText()

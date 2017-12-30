@@ -140,6 +140,53 @@ CONSTRUCT { ?dish mjf:couldTaste ?taste . }
 WHERE {
     ?dish mjf:contains [ mjf:foodItem ?food ] .
     OPTIONAL { ?food mjf:tastes ?taste }
-} ORDER BY ?dish"""
+} ORDER BY ?dish""",
+
+			"All Fridges From OWL" to """
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX mjf: <http://michajonasfood.com/>
+
+SELECT ?f
+WHERE {
+	?x rdfs:subClassOf mjf:Fridges .
+	?f a ?x .
+}
+""",
+
+			"All unhealthy foods inferred from Jena" to """
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX mjf: <http://michajonasfood.com/>
+SELECT ?food ?calories
+WHERE {
+    ?x a mjf:unhealthyFood ;
+       foaf:name ?food ;
+       mjf:caloriesPer100g ?calories .
+}""",
+
+			"Foods which are Vegetable and Meat" to """
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX mjf: <http://michajonasfood.com/>
+SELECT ?food
+WHERE {
+    ?food a mjf:meat ;
+       a mjf:vegetable .
+}""",
+
+			"Find Sandwiches" to """
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX mjf: <http://michajonasfood.com/>
+SELECT ?food
+WHERE {
+    ?food a mjf:sandwich .
+}"""
+
 	)
 }

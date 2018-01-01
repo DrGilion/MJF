@@ -166,6 +166,7 @@
 :MichasFridge :hasFood :lemon .
 :MichasFridge :hasFood :bacon .
 :MichasFridge :hasFood :milk .
+:MichasFridge :hasFood :egg .
 :MichasFridge :hasFood :brownie .
 
 :JonasFridge a :fridge .
@@ -173,7 +174,12 @@
 :JonasFridge :hasFood :onion .
 :JonasFridge :hasFood :bacon .
 :JonasFridge :hasFood :milk .
-:JonasFridge :hasFood :brownie .
+:JonasFridge :hasFood :egg .
+:JonasFridge :hasFood :chocolate .
+:JonasFridge :hasFood :flour .
+:JonasFridge :hasFood :sugar .
+:JonasFridge :hasFood :butter .
+:JonasFridge :hasFood :walnut .
 :JonasFridge :hasFood :ketchup .
 :JonasFridge :hasFood :mincedMeat .
 

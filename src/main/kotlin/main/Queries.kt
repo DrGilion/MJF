@@ -155,7 +155,7 @@ WHERE {
 }
 """,
 
-			"All unhealthy foods inferred from Jena" to """
+			"All unhealthy foods inferred from Jena(over 300kcal)" to """
 PREFIX foaf: <http://xmlns.com/foaf/0.1/>
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
@@ -167,7 +167,7 @@ WHERE {
        mjf:caloriesPer100g ?calories .
 }""",
 
-			"Foods which are Vegetable and Meat" to """
+			"Foods which are vegetable and meat" to """
 PREFIX foaf: <http://xmlns.com/foaf/0.1/>
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
@@ -178,7 +178,7 @@ WHERE {
        a mjf:vegetable .
 }""",
 
-			"Find Sandwiches" to """
+			"Find sandwiches" to """
 PREFIX foaf: <http://xmlns.com/foaf/0.1/>
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
@@ -186,7 +186,31 @@ PREFIX mjf: <http://michajonasfood.com/>
 SELECT ?food
 WHERE {
     ?food a mjf:sandwich .
-}"""
+}""",
+			"Possible dishes for a fridge" to """
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX mjf: <http://michajonasfood.com/>
+SELECT ?fridge ?dish ?inRecipe ?inFridge (if(?fridgeItem = ?item, true,false ) as ?possible)
+WHERE {
+    ?f a mjf:fridge ;
+       foaf:name ?fridge ;
+       mjf:hasFood ?fridgeItem .
+    ?fridgeItem foaf:name ?inFridge .
+    ?d a mjf:dish ;
+       foaf:name ?dish ;
+       mjf:contains [ mjf:foodItem ?item] .
+    ?item foaf:name ?inRecipe .
+}
+order by ?fridge ?dish ?inRecipe
+
+
+#foreach( fridge in fridges ){
+#	foreach( dish in dishes ){
+#		return fridge.items subsetOf dish.items
+#	}
+#}"""
 
 	)
 }
